@@ -15,9 +15,5 @@
 </template>
 
 <script setup>
-import Dropdown from './Navbar/Dropdown.vue';
 import UserDropdown from './Navbar/UserDropown.vue'
-import { useAuthStore } from '../../store';
-
-const { isAuthenticated } = useAuthStore().auth;
 </script>

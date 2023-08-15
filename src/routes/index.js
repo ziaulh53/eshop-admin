@@ -8,6 +8,8 @@ import {
   Dashboard,
   Notfound,
   Customers,
+  Category,
+  Brands
 } from "../views";
 import { useAuthStore } from "../store";
 
@@ -29,7 +31,7 @@ const routes = [
     },
   },
   {
-    path: "/category/:id?",
+    path: "/category/:id",
     name: "product",
     component: ProductList,
     meta: {
@@ -66,6 +68,22 @@ const routes = [
     path: "/customers",
     name: "customers",
     component: Customers,
+    meta: {
+      requireAuth: true,
+    },
+  },
+  {
+    path: "/category",
+    name: "category",
+    component: Category,
+    meta: {
+      requireAuth: true,
+    },
+  },
+  {
+    path: "/brands",
+    name: "brands",
+    component: Brands,
     meta: {
       requireAuth: true,
     },

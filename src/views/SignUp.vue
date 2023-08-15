@@ -48,7 +48,7 @@
 <script setup>
 
 import { computed, ref } from 'vue';
-import { EShopButton } from '../components/shared';
+import { EShopButton } from '../components/Shared';
 import { useAuthStore } from '../store'
 import { useRouter } from 'vue-router';
 import { Layout } from '../components/Layout';

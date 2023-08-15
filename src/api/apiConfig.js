@@ -18,7 +18,7 @@ class ApiConfig {
             },
           }
         );
-        return res;
+        return res.data;
       } catch (error) {
         console.log(error);
       }
@@ -34,6 +34,60 @@ class ApiConfig {
             },
           },
           {}
+        );
+        return res.data;
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    this.put = async (endpoint, id, data) => {
+      try {
+        const res = await axios.put(
+          endpoint+id,
+          {...data},
+          {
+            headers: {
+              Authorization: token ? `Bearer ` + token : "",
+            },
+          },
+          {}
+        );
+        return res.data;
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    this.delete = async (endpoint, id) => {
+      try {
+        const res = await axios.delete(
+          endpoint+id,
+          {
+            headers: {
+              Authorization: token ? `Bearer ` + token : "",
+            },
+          },
+          {}
+        );
+        return res.data;
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    this.fileUpload = async (data) => {
+      try {
+        var formData = new FormData();
+        formData.append("file", data);
+        const res = await axios.post(
+          "/file-upload",
+          formData,
+          {
+            headers: {
+              Authorization: token ? `Bearer ` + token : "",
+              "Content-Type": "multipart/form-data",
+            },
+          }
         );
         return res.data;
       } catch (error) {

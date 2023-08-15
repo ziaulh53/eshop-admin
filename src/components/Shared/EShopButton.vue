@@ -2,7 +2,8 @@
 
 <template>
     <button type="primary" :onclick="onclick" :disabled="disabled || loading" :class="classes + ' btn-class'">
-       <span v-if="loading"><i class="fa-solid fa-spinner fa-spin mr-2" ></i> </span> {{ btnText }}
+        <span v-if="loading"><i class="fa-solid fa-spinner fa-spin mr-2"></i> </span> <span v-if="!loading" class="mr-2"><i
+                :class="iconClass"></i></span> {{ btnText }}
     </button>
 </template>
 
@@ -18,6 +19,9 @@ const props = defineProps({
     },
     classes: {
         type: String
+    },
+    iconClass: {
+        type: String,
     },
     disabled: {
         type: Boolean
