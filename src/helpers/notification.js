@@ -5,13 +5,17 @@ notification.config({
   bottom: "50px",
   duration: 2,
 });
-export const notify = (data) => {
+export const notify = (data, refetch) => {
+  console.log(data)
   if (data.success) {
     notification.success({
       message: data?.msg,
     });
+    if(typeof refetch ==='function'){
+      refetch();
+    }
   } else if (!data.success) {
-    notification.warning({
+    notification.warn({
       message: data?.msg,
     });
   } else {

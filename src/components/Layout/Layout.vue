@@ -42,7 +42,7 @@ defineProps({
             </div>
             <div class="p-2 mx-3 my-3 text-white text-lg">
                 <router-link to="/brands" class="ml-2">
-                    <i class="fa-solid fa-bars mr-2"></i><span>Brands</span>
+                    <i class="fa-solid fa-copyright mr-2"></i><span>Brands</span>
                 </router-link>
             </div>
         </div>

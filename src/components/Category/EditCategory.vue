@@ -1,6 +1,7 @@
 <template>
-    <EShopButton btn-text="Create Category" iconClass="fa-solid fa-plus" :onclick="handleModal" />
-    <a-modal v-model:open="open" title="Basic Modal" @ok="handleSubmit" :ok-button-props="{ disabled: disabled }">
+    <div @click="handleModal"><i class="fa-solid fa-pen-to-square"></i></div>
+    <a-modal v-model:open="open" title="Basic Modal" :ok-button-props="{ disabled: disabled || loading }"
+        @ok="() => handleSubmit(data?._id)" @cancel="handleClose">
         <div class="mb-5">
             <div class="mb-2 font-bold"><label>Name</label></div>
             <input type="text" class="w-full border-2 border-gray-300 rounded-lg p-2 px-4" placeholder=""
@@ -10,16 +11,16 @@
             <div class="mb-2 font-bold"><label>Brands</label></div>
             <div>
                 <a-select v-model:value="categoryData.brands" mode="multiple" placeholder="Inserted are removed"
-                    class="w-full rounded-lg" size="large" >
+                    class="w-full rounded-lg" size="large">
                     <a-select-option v-for="brand of allBrands" :key="brand._id" :value="brand._id">{{ brand.name
                     }}</a-select-option>
                 </a-select>
             </div>
         </div>
         <div class="mb-5">
-            <div class="mb-2 font-bold"><label>Cover image</label></div>
+            <div class="mb-2 font-bold"><label>Cover Image</label></div>
             <div v-if="categoryData.coverImage">
-                <img :src="categoryData.coverImage" class="h-[200px] w-[150px]" />
+                <img :src="categoryData.coverImage" class="h-[60px] w-[60px]" />
             </div>
 
             <div v-if="!categoryData.coverImage" class="h-[200px] w-[150px] border-dashed border-2 bg-slate-100"></div>
@@ -31,31 +32,44 @@
 </template>
 
 <script setup>
-import { ref, computed, toRefs } from 'vue'
-import { EShopButton } from '../shared';
-import { api, category } from '../../api';
-import { useBrandStore } from '../../store';
+import { ref, toRefs, computed } from 'vue';
+import { api, brand, category } from '../../api';
 import { notify } from '../../helpers';
+import { useBrandStore } from '../../store';
+
 const props = defineProps({
+    data: Object,
     refetch: Function
 })
-const {refetch} = toRefs(props)
+
 const brandStore = useBrandStore();
-const allBrands = computed(() => brandStore.brand.map(({ _id, name }) => ({ _id, name })) || [])
 
-const open = ref(false);
-
-const categoryData = ref({ name: '', coverImage: '', brands: [] })
+const { data, refetch } = toRefs(props)
+const open = ref(false)
 const loading = ref(false)
-const disabled = computed(() => !categoryData.value.name || categoryData.value.brands.length === 0);
-const handleSubmit = async () => {
+const categoryData = ref({ ...data.value, brands: data.value.brands.map(({ _id, name }) => ({ key: _id, name })) })
+
+const disabled = computed(() => !categoryData.value.name)
+const allBrands = computed(() => brandStore.brands)
+
+const handleModal = () => {
+    open.value = true;
+}
+const handleClose = () => {
+    open.value = false
+}
+
+// api call
+const handleSubmit = async (id) => {
     loading.value = true;
     try {
-        const res = await api.post(category.createCategory, {...categoryData.value})
-        notify(res, refetch.value)
-        open.value = false;
-
+        const { name, brands, coverImage } = categoryData.value;
+        const res = await api.put(category.editCategory, id, { name, coverImage, brands: brands.map(({ key }) => ({ _id: key })) });
+        notify(res);
+        handleClose();
+        refetch.value();
     } catch (error) {
+        console.log(error)
     }
     loading.value = false
 }
@@ -69,9 +83,8 @@ const handleFile = async (e) => {
     }
 }
 
-const handleModal = () => {
-    open.value = true;
-}
+
+
 
 
 </script>

@@ -2,7 +2,7 @@
     <a-card hoverable borderd>
         <template #cover class="w-[60px]">
             <img alt="example" :src="data.logo || '/assets/logo.png'"
-                style="width: 60px !important; height: 60px; margin: 10px auto;" />
+                style="width: 60px !important; height: 60px; margin: 10px auto;object-fit: cover;" />
         </template>
         <template class="ant-card-actions" #actions>
             <EditBrand :data="data" :refetch="refetch"/>

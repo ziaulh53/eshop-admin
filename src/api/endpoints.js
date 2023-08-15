@@ -15,6 +15,12 @@ export const brand = {
     editBrand: '/admin/brand/edit/',
     deleteBrand: '/admin/brand/delete/',
 }
+export const category = {
+    getCategory: '/admin/category',
+    createCategory: '/admin/category/create',
+    editCategory: '/admin/category/edit/',
+    deleteCategory: '/admin/category/delete/',
+}
 
 
 export const fileUpload = '/file-upload';
