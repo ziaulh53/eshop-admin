@@ -10,7 +10,6 @@
                     :refetch="getAllCategory" />
             </div>
         </a-spin>
-
     </Layout>
 </template>
 
@@ -18,7 +17,7 @@
 import { Layout } from '../components/Layout';
 import { PageTitle } from '../components/shared';
 import { CategoryItem, CreateCategory } from '../components/Category'
-import { api, brand, category } from '../api';
+import { api, category } from '../api';
 import { onMounted, ref } from 'vue';
 import { useBrandStore } from '../store'
 

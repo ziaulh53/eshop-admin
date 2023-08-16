@@ -10,7 +10,7 @@
             <a-popconfirm title="Are you sure?" ok-type="danger" @confirm="() => handleDelete(data._id)">
                 <a href="#"><i class="fa-solid fa-trash text-red-600"></i></a>
             </a-popconfirm>
-            <i class="fa-solid fa-gear"></i>
+            <router-link :to="'/category/'+data._id"><i class="fa-solid fa-link"></i></router-link>
         </template>
         <a-card-meta :title="data.name" description="This is the description">
         </a-card-meta>

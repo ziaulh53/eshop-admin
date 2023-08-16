@@ -31,15 +31,6 @@ const routes = [
     },
   },
   {
-    path: "/category/:id",
-    name: "product",
-    component: ProductList,
-    meta: {
-      requireAuth: true,
-    },
-  },
- 
-  {
     path: "/forget-password",
     name: "forget",
     component: ForgetPassword,
@@ -76,6 +67,14 @@ const routes = [
     path: "/category",
     name: "category",
     component: Category,
+    meta: {
+      requireAuth: true,
+    },
+  },
+  {
+    path: "/category/:id",
+    name: "product",
+    component: ProductList,
     meta: {
       requireAuth: true,
     },

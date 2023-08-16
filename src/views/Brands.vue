@@ -9,7 +9,6 @@
                 <BrandItem v-for="brand of allBrands.result" :key="brand._id" :data="brand" :refetch="getAllbrands" />
             </div>
         </a-spin>
-
     </Layout>
 </template>
 
