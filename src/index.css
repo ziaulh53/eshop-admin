@@ -13,6 +13,9 @@
   background-color: #243c5a;
   color: white;
 }
+.ql-container{
+  min-height: 150px;
+}
 
 @layer components {
   .btn-class {

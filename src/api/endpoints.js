@@ -22,5 +22,11 @@ export const category = {
     deleteCategory: '/admin/category/delete/',
 }
 
+export const product = {
+    createProduct: '/admin/product/create',
+    editProduct: '/admin/product/edit/',
+    deleteProduct: '/admin/product/delete/',
+}
+
 
 export const fileUpload = '/file-upload';
