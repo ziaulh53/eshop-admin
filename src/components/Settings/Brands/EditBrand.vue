@@ -23,8 +23,8 @@
 
 <script setup>
 import { ref, toRefs, computed } from 'vue';
-import { api, brand } from '../../api';
-import { notify } from '../../helpers';
+import { api, brand } from '../../../api';
+import { notify } from '../../../helpers';
 
 const props = defineProps({
     data: Object,
@@ -67,9 +67,5 @@ const handleFile = async (e) => {
         console.log(error)
     }
 }
-
-
-
-
 
 </script>

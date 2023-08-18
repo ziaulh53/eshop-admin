@@ -8,4 +8,4 @@ export { default as Dashboard } from './Dashboard.vue';
 export { default as Notfound } from './Notfound.vue';
 export { default as Customers } from './Customers.vue';
 export { default as Category } from './Category.vue';
-export { default as Brands } from './Brands.vue';
+export { default as Settings } from './Settings.vue';

@@ -18,9 +18,9 @@
 
 <script setup>
 import { toRefs } from 'vue';
-import { api, brand } from '../../api';
-import { notify } from '../../helpers';
 import EditBrand from './EditBrand.vue';
+import { notify } from '../../../helpers';
+import { api, brand } from '../../../api';
 
 const props = defineProps({
     data: Object,

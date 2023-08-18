@@ -9,7 +9,7 @@ import {
   Notfound,
   Customers,
   Category,
-  Brands
+  Settings
 } from "../views";
 import { useAuthStore } from "../store";
 
@@ -80,9 +80,9 @@ const routes = [
     },
   },
   {
-    path: "/brands",
-    name: "brands",
-    component: Brands,
+    path: "/settings",
+    name: "settings",
+    component: Settings,
     meta: {
       requireAuth: true,
     },

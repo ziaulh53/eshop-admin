@@ -23,9 +23,9 @@
 
 <script setup>
 import { ref, computed, toRefs } from 'vue'
-import { EShopButton } from '../shared';
-import { api, brand } from '../../api';
-import { notify } from '../../helpers';
+import { EShopButton } from '../../shared';
+import { api, brand } from '../../../api';
+import { notify } from '../../../helpers';
 const props = defineProps({
     refetch: Function
 })
@@ -62,8 +62,5 @@ const handleFile = async (e) => {
 const handleModal = () => {
     open.value = true;
 }
-
-
-
 
 </script>

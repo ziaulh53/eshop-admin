@@ -22,3 +22,14 @@
     @apply bg-theme-color px-4 py-1 text-white font-semibold rounded-lg disabled:bg-slate-400 hover:bg-theme-light disabled:cursor-not-allowed;
   }
 }
+
+.ant-tabs-tab {
+  flex-grow: 1 !important;
+  margin-right: 0px;
+  width: 80%;
+  text-align: center !important;
+}
+.ant-tabs-nav-scroll {
+  display: flex !important;
+  justify-content: center !important;
+}
