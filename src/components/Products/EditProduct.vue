@@ -1,6 +1,6 @@
 <template>
-    <EShopButton btn-text="Add Product" iconClass="fa-solid fa-plus" :onclick="handleOpen" />
-    <a-modal v-model:open="open" title="New Product Form" width="80%" wrap-class-name="w-full" :mask-closable="false"
+    <EShopButton btn-text="VIEW" :onclick="handleOpen" icon-class="fa-solid fa-pen-to-square text-white" />
+    <a-modal v-model:open="open" title="Update Product Form" width="80%" wrap-class-name="w-full" :mask-closable="false"
         @ok="handleSubmit" :footer="false" :ok-button-props="{ disabled: disabled || loading, class: 'btn-class' }">
         <div class="grid grid-cols-4 gap-5">
             <EShopInput label="Name" name="name" v-model="productData.name" />
@@ -65,7 +65,7 @@
         </div>
         <div class="text-right">
             <button class="mr-3 border-2 px-4 py-1 rounded-lg font-semibold" :onclick="closeModal">Cancel</button>
-            <EShopButton :disabled="disabled" :onclick="handleSubmit" btn-text="Add" :loading="loading"/>
+            <EShopButton :disabled="disabled" :onclick="handleSubmit" btn-text="Update" :loading="loading" />
         </div>
     </a-modal>
 </template>
@@ -82,25 +82,24 @@ import { notify } from '../../helpers';
 
 const props = defineProps({
     refetch: Function,
-    categoryData: Object
+    productDetails: Object
 });
-const { refetch, categoryData } = toRefs(props);
+const { refetch, productDetails } = toRefs(props);
 const open = ref(false);
 const loading = ref(false);
 const content = ref(null);
 
 const initialState = {
-    name: '',
-    price: '0',
-    discountPrice: '0',
-    discountAvailable: false,
-    quantity: '0',
-    colors: [],
-    description: '',
-    brands: '',
-    category: categoryData.value?._id
+    name: productDetails.value?.name,
+    price: productDetails.value?.price,
+    discountPrice: productDetails.value?.discountPrice,
+    discountAvailable: productDetails.value?.discountAvailable,
+    quantity: productDetails.value?.quantity,
+    colors: productDetails.value?.colors,
+    description: productDetails.value?.description,
+    brands: productDetails.value?.brands,
 }
-const productData = ref({...initialState});
+const productData = ref({ ...initialState });
 const colorState = ref({
     colorName: '',
     colorCode: '',
@@ -131,9 +130,9 @@ const handleOpen = () => {
     open.value = true;
 }
 
-const closeModal = ()=>{
+const closeModal = () => {
     open.value = false;
-    productData.value = {...initialState}
+    productData.value = { ...initialState }
 }
 
 // color
@@ -172,7 +171,7 @@ const handleFile = async (e) => {
 const handleSubmit = async () => {
     loading.value = true;
     try {
-        const res = await api.post(product.createProduct, { productData: productData.value });
+        const res = await api.put(product.editProduct, productDetails.value._id, { productData: productData.value });
         notify(res, refetch.value);
         open.value = false
     } catch (error) {
@@ -185,7 +184,6 @@ const handleSubmit = async () => {
 // color edit
 const handleColorEdit = (data, idx) => {
     productData.value.colors[idx] = { ...productData.value.colors[idx], ...data };
-    notify({ success: true, msg: 'Updated' })
 }
 
 </script>

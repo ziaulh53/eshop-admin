@@ -12,7 +12,7 @@
             <input type="file" multiple :onchange="handleFile" />
         </div>
     </div>
-    <EShopButton btn-text="Update" classes="w-full" :onclick="handleEditColor" />
+    <EShopButton btn-text="Update" :disabled="disabledColor" classes="w-full" :onclick="handleEditColor" />
 </template>
 
 <script setup>
@@ -58,8 +58,8 @@ const handleFile = async (e) => {
 }
 
 // submit 
-const handleSubmit = async () => {
-    console.log(productData.value)
-}
+// const handleSubmit = async () => {
+//     console.log(productData.value)
+// }
 
 </script>
