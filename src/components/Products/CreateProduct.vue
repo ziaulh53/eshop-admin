@@ -1,7 +1,7 @@
 <template>
     <EShopButton btn-text="Add Product" iconClass="fa-solid fa-plus" :onclick="handleOpen" />
     <a-modal v-model:open="open" title="New Product Form" width="80%" wrap-class-name="w-full" :mask-closable="false"
-        @ok="handleSubmit" :footer="false" :ok-button-props="{ disabled: disabled || loading, class: 'btn-class' }">
+        @ok="handleSubmit" :footer="false">
         <div class="grid grid-cols-4 gap-5">
             <EShopInput label="Name" name="name" v-model="productData.name" />
             <EShopInput label="Price" name="price" v-model="productData.price" />
@@ -21,11 +21,22 @@
                     </template>
                     <a-collapse-panel v-for="(color, idx) of productData.colors" :key="color.colorName"
                         :header="color.colorName" :style="customStyle">
-                        <EditColor :colorstate="color" :handleUpdateColor="handleColorEdit" :idx="idx" />
+                        <EditColor :colorstate="color" :handleUpdateColor="handleColorEdit" :idx="idx"
+                            :all-colors="allColors" />
                     </a-collapse-panel>
                     <a-collapse-panel key="form" header="ADD" :style="customStyle">
-                        <EShopInput type="text" label="Color Name" v-model="colorState.colorName" />
-                        <EShopInput type="text" label="Color Code" v-model="colorState.colorCode" />
+                        <div class="mb-5">
+                            <div class="mb-2 font-bold"><label>Color</label></div>
+                            <div>
+                                <a-select v-model:value="colorState.color" placeholder="Inserted are removed"
+                                    class="w-full rounded-lg" size="large">
+                                    <a-select-option v-for="color of allColors" :key="color._id"
+                                        :value="color._id">{{
+                                            color.colorName
+                                        }}</a-select-option>
+                                </a-select>
+                            </div>
+                        </div>
                         <EShopInput type="number" label="Quantity" v-model="colorState.quantity" />
                         <div class="mb-2">
                             <div class="mb-2 font-bold">Product images</div>
@@ -53,6 +64,7 @@
                     </a-select>
                 </div>
             </div>
+
             <EShopInput label="Quantity" name="quantity" v-model="productData.quantity" />
         </div>
         <div class="grid grid-cols-2">
@@ -65,7 +77,7 @@
         </div>
         <div class="text-right">
             <button class="mr-3 border-2 px-4 py-1 rounded-lg font-semibold" :onclick="closeModal">Cancel</button>
-            <EShopButton :disabled="disabled" :onclick="handleSubmit" btn-text="Add" :loading="loading"/>
+            <EShopButton :disabled="disabled" :onclick="handleSubmit" btn-text="Add" :loading="loading" />
         </div>
     </a-modal>
 </template>
@@ -82,7 +94,8 @@ import { notify } from '../../helpers';
 
 const props = defineProps({
     refetch: Function,
-    categoryData: Object
+    categoryData: Object,
+    allColors: Array
 });
 const { refetch, categoryData } = toRefs(props);
 const open = ref(false);
@@ -100,16 +113,14 @@ const initialState = {
     brands: '',
     category: categoryData.value?._id
 }
-const productData = ref({...initialState});
+const productData = ref({ ...initialState });
 const colorState = ref({
-    colorName: '',
-    colorCode: '',
+    color: '',
     images: [],
     quantity: '0'
 })
 
-const { name, price, colors, brands } = productData.value;
-const disabled = computed(() => !name || !price || !colors.length || !brands)
+const disabled = computed(() => !productData.value.name || !productData.value.price || !productData.value.brands || !productData.value.colors.length)
 const activeKey = ref(['1']);
 const customStyle = 'background: #f7f7f7;border-radius: 4px;margin-bottom: 24px;border: 0;overflow: hidden';
 
@@ -126,28 +137,26 @@ const editorOptions = {
     },
 };
 
-
 const handleOpen = () => {
     open.value = true;
 }
 
-const closeModal = ()=>{
+const closeModal = () => {
     open.value = false;
-    productData.value = {...initialState}
+    productData.value = { ...initialState }
 }
 
 // color
-const disabledColor = computed(() => !colorState.value.colorName || !colorState.value.colorName || !colorState.value.quantity || !colorState.value.images.length)
+const disabledColor = computed(() => !colorState.value.color || !colorState.value.quantity || !colorState.value.images.length)
 const handleAddColor = () => {
 
     let colors = productData.value.colors;
-    const { colorName, colorCode, images, quantity } = colorState.value;
-    colors.push({ colorName, colorCode, images, quantity: Number(quantity) });
+    const { color, images, quantity } = colorState.value;
+    colors.push({ color, images, quantity: Number(quantity) });
     productData.value.colors = colors;
     colorState.value = {
         ...colorState.value,
-        colorName: '',
-        colorCode: '',
+        color: '',
         images: [],
         quantity: 0
     }
@@ -187,5 +196,7 @@ const handleColorEdit = (data, idx) => {
     productData.value.colors[idx] = { ...productData.value.colors[idx], ...data };
     notify({ success: true, msg: 'Updated' })
 }
+
+
 
 </script>

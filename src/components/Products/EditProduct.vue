@@ -21,11 +21,21 @@
                     </template>
                     <a-collapse-panel v-for="(color, idx) of productData.colors" :key="color.colorName"
                         :header="color.colorName" :style="customStyle">
-                        <EditColor :colorstate="color" :handleUpdateColor="handleColorEdit" :idx="idx" />
+                        <EditColor :colorstate="color" :handleUpdateColor="handleColorEdit" :idx="idx"
+                            :allColors="allColors" />
                     </a-collapse-panel>
                     <a-collapse-panel key="form" header="ADD" :style="customStyle">
-                        <EShopInput type="text" label="Color Name" v-model="colorState.colorName" />
-                        <EShopInput type="text" label="Color Code" v-model="colorState.colorCode" />
+                        <div class="mb-5">
+                            <div class="mb-2 font-bold"><label>Color</label></div>
+                            <div>
+                                <a-select v-model:value="colorState.color" placeholder="Inserted are removed"
+                                    class="w-full rounded-lg" size="large">
+                                    <a-select-option v-for="color of allColors" :key="color._id" :value="color._id">{{
+                                        color.colorName
+                                    }}</a-select-option>
+                                </a-select>
+                            </div>
+                        </div>
                         <EShopInput type="number" label="Quantity" v-model="colorState.quantity" />
                         <div class="mb-2">
                             <div class="mb-2 font-bold">Product images</div>
@@ -47,7 +57,7 @@
                 <div>
                     <a-select v-model:value="productData.brands" placeholder="Inserted are removed"
                         class="w-full rounded-lg" size="large">
-                        <a-select-option v-for="brand of categoryData?.brands" :key="brand._id" :value="brand._id">{{
+                        <a-select-option v-for="brand of allBrands" :key="brand._id" :value="brand._id">{{
                             brand.name
                         }}</a-select-option>
                     </a-select>
@@ -82,7 +92,9 @@ import { notify } from '../../helpers';
 
 const props = defineProps({
     refetch: Function,
-    productDetails: Object
+    productDetails: Object,
+    allColors: Array,
+    allBrands: Array
 });
 const { refetch, productDetails } = toRefs(props);
 const open = ref(false);
@@ -97,7 +109,7 @@ const initialState = {
     quantity: productDetails.value?.quantity,
     colors: productDetails.value?.colors,
     description: productDetails.value?.description,
-    brands: productDetails.value?.brands,
+    brands: productDetails.value?.brands?._id,
 }
 const productData = ref({ ...initialState });
 const colorState = ref({
@@ -107,8 +119,7 @@ const colorState = ref({
     quantity: '0'
 })
 
-const { name, price, colors, brands } = productData.value;
-const disabled = computed(() => !name || !price || !colors.length || !brands)
+const disabled = computed(() => !productData.value.name || !productData.value.price || !productData.value.colors.length || !productData.value.brands)
 const activeKey = ref(['1']);
 const customStyle = 'background: #f7f7f7;border-radius: 4px;margin-bottom: 24px;border: 0;overflow: hidden';
 

@@ -28,5 +28,12 @@ export const product = {
     deleteProduct: '/admin/product/delete/',
 }
 
+export const color = {
+    getColors: '/admin/color',
+    createColor: '/admin/color/create',
+    editColor: '/admin/color/edit/',
+    deleteColor: '/admin/color/delete/',
+}
+
 
 export const fileUpload = '/file-upload';

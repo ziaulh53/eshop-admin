@@ -13,7 +13,7 @@
                         icon-class="fa-solid fa-trash-can text-white" :onclick="() => { }" />
                 </a-popconfirm>
 
-                <EditProduct :refetch="refetch" :product-details="product"/>
+                <EditProduct :refetch="refetch" :product-details="product" :all-colors="allColors" :all-brands="allBrands"/>
 
             </div>
         </div>
@@ -30,13 +30,14 @@ import EditProduct from './EditProduct.vue';
 
 const props = defineProps({
     product: Object,
-    refetch: Function
+    refetch: Function,
+    allColors: Array,
+    allBrands: Array
 })
 
 const { refetch, product } = toRefs(props)
 
 const handleDelete = async () => {
-    console.log('dfdfd')
     try {
         const res = await api.delete(productEndpoint.deleteProduct, product.value._id);
         notify(res, refetch.value)

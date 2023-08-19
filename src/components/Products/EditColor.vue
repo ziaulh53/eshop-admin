@@ -1,6 +1,15 @@
 <template>
-    <EShopInput type="text" label="Color Name" v-model="colorState.colorName" />
-    <EShopInput type="text" label="Color Code" v-model="colorState.colorCode" />
+    <div class="mb-5">
+        <div class="mb-2 font-bold"><label>Color</label></div>
+        <div>
+            <a-select v-model:value="colorState.color" placeholder="Inserted are removed" class="w-full rounded-lg"
+                size="large">
+                <a-select-option v-for="color of allColors" :key="color._id" :value="color._id">{{
+                    color.colorName
+                }}</a-select-option>
+            </a-select>
+        </div>
+    </div>
     <EShopInput type="number" label="Quantity" v-model="colorState.quantity" />
     <div class="mb-2">
         <div class="mb-2 font-bold">Product images</div>
@@ -12,7 +21,8 @@
             <input type="file" multiple :onchange="handleFile" />
         </div>
     </div>
-    <EShopButton btn-text="Update" :disabled="disabledColor" classes="w-full" :onclick="handleEditColor" />
+    <EShopButton btn-text="Update" :disabled="disabledColor" classes="w-full" :onclick="handleEditColor"
+        :allColors="allColors" />
 </template>
 
 <script setup>
@@ -23,22 +33,23 @@ import { api } from '../../api';
 const props = defineProps({
     colorstate: Object,
     handleUpdateColor: Function,
-    idx: Number
+    idx: Number,
+    allColors: Array,
+    allBrands: Array
 });
 const { colorstate, handleUpdateColor, idx } = toRefs(props);
 const colorState = ref({
-    colorName: colorstate.value.colorName,
-    colorCode: colorstate.value.colorCode,
+    color: colorstate.value.color,
     images: colorstate.value.images,
     quantity: colorstate.value.quantity
 })
 
 
 // color
-const disabledColor = computed(() => !colorState.value.colorName || !colorState.value.colorName || !colorState.value.quantity || !colorState.value.images.length)
+const disabledColor = computed(() => !colorState.value.color || !colorState.value.quantity || !colorState.value.images.length)
 const handleEditColor = () => {
-    const { colorName, colorCode, images, quantity } = colorState.value;
-    colorState.value = { colorName, colorCode, images, quantity: Number(quantity) };
+    const { color, images, quantity } = colorState.value;
+    colorState.value = { color, images, quantity: Number(quantity) };
     handleUpdateColor.value(colorState.value, idx.value)
 }
 
@@ -46,7 +57,6 @@ const handleFile = async (e) => {
     let images = colorState.value.images;
     try {
         const files = e.target.files;
-        console.log(files, e.target.files)
         for (var i = 0; i < files.length; i++) {
             const res = await api.fileUpload(files[i]);
             images.push(res.result.url);
@@ -57,7 +67,7 @@ const handleFile = async (e) => {
     }
 }
 
-// submit 
+// submit
 // const handleSubmit = async () => {
 //     console.log(productData.value)
 // }
