@@ -9,7 +9,8 @@ import {
   Notfound,
   Customers,
   Category,
-  Settings
+  Settings,
+  LandingPage
 } from "../views";
 import { useAuthStore } from "../store";
 
@@ -75,6 +76,14 @@ const routes = [
     path: "/category/:id",
     name: "product",
     component: ProductList,
+    meta: {
+      requireAuth: true,
+    },
+  },
+  {
+    path: "/landing",
+    name: "landing",
+    component: LandingPage,
     meta: {
       requireAuth: true,
     },

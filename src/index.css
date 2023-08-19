@@ -33,3 +33,8 @@
   display: flex !important;
   justify-content: center !important;
 }
+
+input::file-selector-button {
+  font-weight: bold;
+  margin: auto;
+}

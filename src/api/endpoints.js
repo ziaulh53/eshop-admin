@@ -35,5 +35,11 @@ export const color = {
     deleteColor: '/admin/color/delete/',
 }
 
+export const landing = {
+    getHomePageData: '/admin/landing',
+    updateBanner: '/admin/landing/banner',
+    updateTrending: '/admin/landing/trending',
+}
+
 
 export const fileUpload = '/file-upload';
