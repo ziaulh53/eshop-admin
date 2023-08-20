@@ -2,6 +2,7 @@
     <a-card bordered class="bg-slate-100">
         <div class="font-semibold text-lg mb-2">Banners</div>
         <div class="grid grid-cols-4 gap-5 mb-5">
+            <!-- {{ bannerState }} -->
             <div v-for="url of bannerState" class="border-2 p-3 bg-white rounded-lg" :key="url">
                 <img :src="url ||'/assets/logo.png'" class="w-full h-[200px] object-cover" />
             </div>
@@ -31,7 +32,7 @@ const props = defineProps({
 
 const { banners, refetch } = toRefs(props)
 
-const bannerState = ref([banners.value]);
+const bannerState = ref(banners.value);
 
 const disabled = computed(() => !bannerState.value?.length);
 
