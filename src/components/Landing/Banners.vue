@@ -1,10 +1,13 @@
 <template>
-    <a-card bordered class="bg-slate-100">
+    <a-card bordered class="bg-slate-100 mb-5">
         <div class="font-semibold text-lg mb-2">Banners</div>
         <div class="grid grid-cols-4 gap-5 mb-5">
-            <!-- {{ bannerState }} -->
-            <div v-for="url of bannerState" class="border-2 p-3 bg-white rounded-lg" :key="url">
-                <img :src="url ||'/assets/logo.png'" class="w-full h-[200px] object-cover" />
+            <div v-for="url of bannerState" class="group border-2 p-3 bg-white rounded-lg relative" :key="url">
+                <img :src="url || '/assets/logo.png'" class="w-full h-[200px] object-cover" />
+                <div class="absolute hidden group-hover:flex py-2 justify-center left-0 bottom-3 bg-opacity-50 bg-white w-full">
+                    <span class="cursor-pointer" :onclick="()=>handleDelete(url)"><i class="fa-solid fa-trash text-red-600 text-base"></i></span>
+                    
+                </div>
             </div>
             <div class="border-2 p-3 bg-white rounded-lg">
                 <label for="banner-upload" class="w-full flex justify-center items-center h-[200px] border-2 border-dashed">
@@ -42,10 +45,14 @@ const handleFile = async (e) => {
         const res = await api.fileUpload(e.target.files[0]);
         images.push(res.result.url)
         bannerState.value = images;
-        console.log(bannerState.value)
     } catch (error) {
         console.log(error)
     }
+}
+const handleDelete = (url)=>{
+    const images = bannerState.value.filter(imgUrl=> imgUrl != url);
+    bannerState.value = images;
+    console.log(url)
 }
 const handleUpdate = async () => {
     try {

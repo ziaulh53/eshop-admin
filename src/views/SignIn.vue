@@ -46,6 +46,7 @@ const handleSubmit = async () => {
         const res = await userStore.userLogin({ ...credentialData.value });
         if (res.success) {
             router.push({ name: 'dashboard' })
+            window.location.reload();
         }
 
     } catch (error) {

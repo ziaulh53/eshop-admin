@@ -23,6 +23,7 @@ export const category = {
 }
 
 export const product = {
+    getProdcuts: '/admin/product',
     createProduct: '/admin/product/create',
     editProduct: '/admin/product/edit/',
     deleteProduct: '/admin/product/delete/',
