@@ -14,9 +14,11 @@
                     class="w-full rounded-lg" size="large">
                     <a-select-option v-for="brand of allBrands" :key="brand._id" :value="brand._id">{{ brand.name
                     }}</a-select-option>
+                   
                 </a-select>
             </div>
         </div>
+        <!-- {{ allBrands }} -->
         <div class="mb-5">
             <div class="mb-2 font-bold"><label>Cover Image</label></div>
             <div v-if="categoryData.coverImage">
@@ -33,7 +35,7 @@
 
 <script setup>
 import { ref, toRefs, computed } from 'vue';
-import { api, brand, category } from '../../api';
+import { api, category } from '../../api';
 import { notify } from '../../helpers';
 import { useBrandStore } from '../../store';
 
@@ -64,7 +66,8 @@ const handleSubmit = async (id) => {
     loading.value = true;
     try {
         const { name, brands, coverImage } = categoryData.value;
-        const res = await api.put(category.editCategory, id, { name, coverImage, brands: brands.map(({ key }) => ({ _id: key })) });
+        console.log(brands)
+        const res = await api.put(category.editCategory, id, { name, coverImage, brands });
         notify(res);
         handleClose();
         refetch.value();

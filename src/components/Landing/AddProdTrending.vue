@@ -5,7 +5,7 @@
             <a-card hoverable v-for="product of allProducts.result" :key="product._id" class="relative"
                 @click="() => handleSelectProduct(product?._id)">
                 <template #cover>
-                    <img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
+                    <img alt="example" class="h-[200px]" :src="product?.colors[0]?.images[0] ||'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png'" />
                 </template>
                 <a-card-meta :title="product?.name" :description="'Category: ' + product?.category?.name" />
                 <div v-if="selectedProduct.includes(product?._id)"

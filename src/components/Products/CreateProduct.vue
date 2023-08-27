@@ -19,8 +19,8 @@
                     <template #expandIcon="{ isActive }">
                         <caret-right-outlined :rotate="isActive ? 90 : 0" />
                     </template>
-                    <a-collapse-panel v-for="(color, idx) of productData.colors" :key="color.colorName"
-                        :header="color.colorName" :style="customStyle">
+                    <a-collapse-panel v-for="(color, idx) of productData.colors" :key="color?.color"
+                        :header="allColors.find(cl=>cl._id===color.color).colorName" :style="customStyle">
                         <EditColor :colorstate="color" :handleUpdateColor="handleColorEdit" :idx="idx"
                             :all-colors="allColors" />
                     </a-collapse-panel>
@@ -155,7 +155,6 @@ const handleAddColor = () => {
     colors.push({ color, images, quantity: Number(quantity) });
     productData.value.colors = colors;
     colorState.value = {
-        ...colorState.value,
         color: '',
         images: [],
         quantity: 0
@@ -181,7 +180,7 @@ const handleFile = async (e) => {
 const handleSubmit = async () => {
     loading.value = true;
     try {
-        const res = await api.post(product.createProduct, { productData: productData.value });
+        const res = await api.post(product.createProduct, { productData: {...productData.value, description: content?.value?.getHTML()} });
         notify(res, refetch.value);
         open.value = false
     } catch (error) {

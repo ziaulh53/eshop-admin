@@ -41,7 +41,7 @@ const { colorstate, handleUpdateColor, idx } = toRefs(props);
 const colorState = ref({
     color: colorstate.value.color,
     images: colorstate.value.images,
-    quantity: colorstate.value.quantity
+    quantity: String(colorstate.value.quantity)
 })
 
 

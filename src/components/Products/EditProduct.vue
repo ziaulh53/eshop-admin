@@ -19,10 +19,11 @@
                     <template #expandIcon="{ isActive }">
                         <caret-right-outlined :rotate="isActive ? 90 : 0" />
                     </template>
-                    <a-collapse-panel v-for="(color, idx) of productData.colors" :key="color.colorName"
-                        :header="color.colorName" :style="customStyle">
+                    <a-collapse-panel v-for="(color, idx) of productData.colors" :key="color?.color"
+                        :header="allColors.find(cl => cl._id === color.color)?.colorName" :style="customStyle">
                         <EditColor :colorstate="color" :handleUpdateColor="handleColorEdit" :idx="idx"
                             :allColors="allColors" />
+
                     </a-collapse-panel>
                     <a-collapse-panel key="form" header="ADD" :style="customStyle">
                         <div class="mb-5">
@@ -103,18 +104,17 @@ const content = ref(null);
 
 const initialState = {
     name: productDetails.value?.name,
-    price: productDetails.value?.price,
-    discountPrice: productDetails.value?.discountPrice,
+    price: String(productDetails.value?.price),
+    discountPrice: String(productDetails.value?.discountPrice),
     discountAvailable: productDetails.value?.discountAvailable,
-    quantity: productDetails.value?.quantity,
+    quantity: String(productDetails.value?.quantity),
     colors: productDetails.value?.colors,
     description: productDetails.value?.description,
     brands: productDetails.value?.brands?._id,
 }
 const productData = ref({ ...initialState });
 const colorState = ref({
-    colorName: '',
-    colorCode: '',
+    color: '',
     images: [],
     quantity: '0'
 })
@@ -147,17 +147,15 @@ const closeModal = () => {
 }
 
 // color
-const disabledColor = computed(() => !colorState.value.colorName || !colorState.value.colorName || !colorState.value.quantity || !colorState.value.images.length)
+const disabledColor = computed(() => !colorState.value.color || !colorState.value.quantity || !colorState.value.images.length)
 const handleAddColor = () => {
 
     let colors = productData.value.colors;
-    const { colorName, colorCode, images, quantity } = colorState.value;
-    colors.push({ colorName, colorCode, images, quantity: Number(quantity) });
+    const { color, images, quantity } = colorState.value;
+    colors.push({ color, images, quantity: Number(quantity) });
     productData.value.colors = colors;
     colorState.value = {
-        ...colorState.value,
-        colorName: '',
-        colorCode: '',
+        color: "",
         images: [],
         quantity: 0
     }
@@ -182,7 +180,7 @@ const handleFile = async (e) => {
 const handleSubmit = async () => {
     loading.value = true;
     try {
-        const res = await api.put(product.editProduct, productDetails.value._id, { productData: productData.value });
+        const res = await api.put(product.editProduct, productDetails.value._id, { productData: { ...productData.value, description: content.value.getHTML() } });
         notify(res, refetch.value);
         open.value = false
     } catch (error) {
