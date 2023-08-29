@@ -23,6 +23,10 @@
   }
 }
 
+.ant-btn-primary{
+  background: #1677ff;
+}
+
 .ant-tabs-tab {
   flex-grow: 1 !important;
   margin-right: 0px;

@@ -7,6 +7,8 @@ export { default as ResetPassword } from './ResetPassword.vue';
 export { default as Dashboard } from './Dashboard.vue';
 export { default as Notfound } from './Notfound.vue';
 export { default as Customers } from './Customers.vue';
+export { default as Orders } from './Orders.vue';
+export { default as OrderDetails } from './OrderDetails.vue';
 export { default as Category } from './Category.vue';
 export { default as LandingPage } from './LandingPage.vue';
 export { default as Settings } from './Settings.vue';

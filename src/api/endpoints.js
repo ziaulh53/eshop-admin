@@ -41,6 +41,10 @@ export const landing = {
     updateBanner: '/admin/landing/banner',
     updateTrending: '/admin/landing/trending',
 }
+export const orderEndpoint = {
+    getOrders: '/admin/order/',
+    updateStatus: '/admin/order/update-status/',
+}
 
 
 export const fileUpload = '/file-upload';

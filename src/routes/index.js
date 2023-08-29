@@ -10,7 +10,9 @@ import {
   Customers,
   Category,
   Settings,
-  LandingPage
+  LandingPage,
+  Orders,
+  OrderDetails
 } from "../views";
 import { useAuthStore } from "../store";
 
@@ -60,6 +62,22 @@ const routes = [
     path: "/customers",
     name: "customers",
     component: Customers,
+    meta: {
+      requireAuth: true,
+    },
+  },
+  {
+    path: "/orders",
+    name: "orders",
+    component: Orders,
+    meta: {
+      requireAuth: true,
+    },
+  },
+  {
+    path: "/order-details/:id",
+    name: "order-details",
+    component: OrderDetails,
     meta: {
       requireAuth: true,
     },
