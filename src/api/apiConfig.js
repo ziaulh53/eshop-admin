@@ -28,7 +28,7 @@ class ApiConfig {
         const res = await axios.get(
           endpoint,
           {
-            params,
+            params: {...params},
             headers: {
               Authorization: token ? `Bearer ` + token : "",
             },
