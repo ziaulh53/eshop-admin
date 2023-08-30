@@ -8,7 +8,7 @@ export const getStatusColor = (status) => {
     case ORDER_STATUS.Shipped:
       return "blue";
     case ORDER_STATUS.Delivered:
-      return "success";
+      return "black";
     case ORDER_STATUS.Cancelled:
       return "red";
     default:

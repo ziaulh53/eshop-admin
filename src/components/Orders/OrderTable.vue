@@ -1,5 +1,5 @@
 <template>
-    <a-table :columns="columns" :data-source="allOrders" :loading="loading">
+    <a-table :columns="columns" :data-source="allOrders" :loading="loading" :pagination="false">
         <template #bodyCell="{ column, record, index }">
             <template v-if="column.key === 'serial'">
                 <p>{{ index + 1 }}</p>
@@ -30,6 +30,7 @@
 </template>
 
 <script setup>
+import { toRefs } from 'vue'
 import { getStatusColor } from '../../helpers';
 import moment from 'moment';
 
@@ -37,6 +38,8 @@ const props = defineProps({
     allOrders: Array,
     loading: Boolean,
 })
+
+const { allOrders, loading } = toRefs(props)
 
 const columns = [
     {

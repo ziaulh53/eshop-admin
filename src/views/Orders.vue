@@ -2,9 +2,12 @@
     <Layout>
         <PageTitle title="All orders" />
         <div class="mb-5">
-            <OrderFilters :filter-submit="fetchOrders"/>
+            <OrderFilters :filter-submit="handleSubmitFilter" />
         </div>
-        <OrderTable :all-orders="allOrders?.result" :loading="loading"  />
+        <OrderTable :filter-submit="fetchOrders" :all-orders="allOrders?.result?.orders" :loading="loading" />
+        <div class="text-right mt-5">
+            <a-pagination :total="totalCount" :limit="1" :current="current" :page-size="15" @change="handleFilter" />
+        </div>
     </Layout>
 </template>
 
@@ -16,12 +19,24 @@ import { PageTitle } from '../components/shared';
 import { OrderFilters, OrderTable } from '../components/Orders'
 const allOrders = ref({});
 const loading = ref(false);
+const filters = ref({
+    startDate: '',
+    endDate: '',
+    orderId: '',
+    status: '',
+    email: '',
+    phone: ''
+})
 
-const fetchOrders = async (filters) => {
+const current = ref(1)
+
+const totalCount = ref(2);
+
+const fetchOrders = async () => {
     loading.value = true
-    console.log(filters)
     try {
-        allOrders.value = await api.get(orderEndpoint.getOrders,  filters);
+        allOrders.value = await api.get(orderEndpoint.getOrders, { ...filters.value, page: current.value });
+        totalCount.value = allOrders.value?.result?.count
     } catch (error) {
         console.log(error)
     }
@@ -32,5 +47,16 @@ onMounted(() => {
     fetchOrders();
 })
 
+const handleSubmitFilter = (filter) => {
+    filters.value = {
+        ...filter
+    }
+    console.log(filter)
+    fetchOrders();
+}
+const handleFilter = (page) => {
+    current.value = page;
+    fetchOrders()
+}
 
 </script>

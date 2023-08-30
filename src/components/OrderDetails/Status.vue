@@ -1,13 +1,13 @@
 <template>
-    <div class="mb-5 flex justify-between items-center">
+    <div class="mb-7 flex justify-between items-center">
         <h2 class="text-lg font-semibold">STATUS:
             <a-tag v-if="data?.status" :color="getStatusColor(data?.status)" class="text-lg uppercase">
                 {{ data?.status }}
             </a-tag>
         </h2>
         <div class="flex items-center">
-            <span class="mr-2">Update Status: </span>
-            <a-select ref="select" v-model:value="value1" style="width: 150px" @focus="focus" @change="handleChange">
+            <span class="mr-2 text-base font-semibold">Update Status: </span>
+            <a-select ref="select" style="width: 150px" @focus="focus" size="large" @change="handleChange">
                 <a-select-option :value="ORDER_STATUS.Pending">{{ ORDER_STATUS.Pending }}</a-select-option>
                 <a-select-option :value="ORDER_STATUS.Cancelled">{{ ORDER_STATUS.Cancelled }}</a-select-option>
                 <a-select-option :value="ORDER_STATUS.Accepted">{{ ORDER_STATUS.Accepted }}</a-select-option>
