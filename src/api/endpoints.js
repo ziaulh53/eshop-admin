@@ -46,5 +46,9 @@ export const orderEndpoint = {
     updateStatus: '/admin/order/update-status/',
 }
 
+export const dashboardEndpoint = {
+    getDashboardData: '/admin/dashboard/',
+}
+
 
 export const fileUpload = '/file-upload';

@@ -42,3 +42,9 @@ input::file-selector-button {
   font-weight: bold;
   margin: auto;
 }
+
+canvas{
+  width:100% !important;
+  min-height: 400px !important;
+
+}
