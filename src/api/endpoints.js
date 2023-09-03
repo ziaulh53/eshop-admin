@@ -48,6 +48,7 @@ export const orderEndpoint = {
 
 export const dashboardEndpoint = {
     getDashboardData: '/admin/dashboard/',
+    getCategorySelling: '/admin/dashboard/by-category/'
 }
 
 

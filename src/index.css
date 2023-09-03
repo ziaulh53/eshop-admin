@@ -43,8 +43,13 @@ input::file-selector-button {
   margin: auto;
 }
 
-canvas{
-  width:100% !important;
-  min-height: 400px !important;
+.line-chart> canvas{
+    width:100% !important;
+    min-height: 400px !important;
+}
 
+.pie-chart> canvas{
+  width:100% !important;
+  min-height: 300px !important;
+  max-height: 400px;
 }
